@@ -1,0 +1,180 @@
+{
+  "wordcl": {
+    "swedish_transl": "ordklass",
+    "values": {
+      "nn": "substantiv",
+      "pm": "egennamn",
+      "jj": "adjektiv",
+      "rg": "räkneord grundtal",
+      "ro": "räkneord ordningstal",
+      "vb": "verb",
+      "ab": "adverb",
+      "in": "interjektion",
+      "ha": "frågande/relativt adverb",
+      "dt": "determinerare (artikel)",
+      "hd": "frågande/relativ determinerare (artikel)",
+      "ps": "possessiv",
+      "hs": "frågande/relativ possessiv",
+      "pn": "pronomen",
+      "hp": "frågande/relativt pronomen",
+      "sn": "subjunktion",
+      "kn": "konjunktion",
+      "pp": "preposition",
+      "ie": "infinitivmärke",
+      "dl": "delimiter",
+      "pc": "particip",
+      "pl": "partikel",
+      "uo": "utländskt ord",
+      "an": "förkortning"
+    }
+  },
+  "deg": {
+    "swedish_transl": "komparationsgrad",
+    "values": {
+      "pos": "positiv",
+      "kom": "komparativ",
+      "suv": "superlativ"
+    }
+  },
+  "gender": {
+    "swedish_transl": "genus",
+    "values": {
+      "utr": "utrum",
+      "neu": "neutrum",
+      "utr/neu": "utrum/neutrum",
+      "mas": "maskulinum"
+    }
+  },
+  "num": {
+    "swedish_transl": "numerus",
+    "values": {
+      "sin": "singular",
+      "plu": "plural",
+      "sin/plu": "singular/plural"
+    }
+  },
+  "spec": {
+    "swedish_transl": "species (bestämdhet)",
+    "values": {
+      "ind": "indefinit (obestämd form)",
+      "def": "definit (bestämd form)",
+      "ind/def": "indefinit/definit (obestämd/bestämd)"
+    }
+  },
+  "case": {
+    "swedish_transl": "kasus",
+    "values": {
+      "nom": "nominativ",
+      "gen": "genitiv",
+      "sms": "sammansattningsled"
+    }
+  },
+  "nntype": {
+    "swedish_transl": "substantivtyp",
+    "values": {
+      "set": "måttapposition (mängdkvantifierare)",
+      "dat": "datumord",
+      "div": "massord"
+    }
+  },
+  "vbf": {
+    "swedish_transl": "verbform",
+    "values": {
+      "prs": "presens (nutid)",
+      "prt": "preteritum (dåtid)",
+      "inf": "infinitv (grundform)",
+      "sup": "supinum",
+      "imp": "imperativ"
+    }
+  },
+  "mood": {
+    "swedish_transl": "modus",
+    "values": {
+      "kon": "konjunktiv"
+    }
+  },
+  "pef": {
+    "swedish_transl": "perfekt form",
+    "values": {
+      "prf": "perfekt"
+    }
+  },
+  "voice": {
+    "swedish_transl": "diates",
+    "values": {
+      "akt": "aktiv",
+      "sfo": "s-form"
+    }
+  },
+  "pnf": {
+    "swedish_transl": "pronomenform",
+    "values": {
+      "sub": "subjektsform",
+      "obj": "objektsform",
+      "sub/obj": "subjekt/objektsform"
+    }
+  },
+  "vbt": {
+    "swedish_transl": "verbtyp",
+    "values": {
+      "aux": "hjälpverb",
+      "kop": "kopula",
+      "mod": "modalt"
+    }
+  },
+  "rgt": {
+    "swedish_transl": "räknordstyp",
+    "values": {
+      "yea": "årtal"
+    }
+  },
+  "cht": {
+    "swedish_transl": "teckentyp",
+    "values": {
+      "mad": "skiljetecken vid meningsslut",
+      "mid": "skiljetecken inom en mening",
+      "pad": "diverse tecken \" ' [ ] ( )"
+    }
+  },
+  "sed": {
+    "swedish_transl": "meningsavgränsare",
+    "values": {
+      "sen": "meningsbörjanochslut"
+    }
+  },
+  "style": {
+    "swedish_transl": "stil",
+    "values": {
+      "datm": "dataterm",
+      "frmo": "främmande ord",
+      "foal": "formellt eller ålderdomligt",
+      "fsms": "felaktig sammansättning",
+      "lgpp": "lång preposition",
+      "libb": "ord med liten begynnelsebokstav",
+      "lprs": "lång presensform",
+      "onfl": "onödig förlängning",
+      "pavb": "sammansatt verb (partikelverb)",
+      "psvb": "passiva verb",
+      "stbb": "ord med stor begynnelsebokstav",
+      "svba": "svårbegripligt ord > 75%",
+      "vard": "vardagligt ord"
+    }
+  },
+  "phrase": {
+    "swedish_transl": "frastyp",
+    "values": {
+      "npdef": "nominalfras i bestämd form",
+      "npindef": "nominalfras i obestämd form"
+    }
+  },
+  "extra": {
+    "swedish_transl": "extra",
+    "values": {
+      "per": "period",
+      "que": "question",
+      "exc": "exclamation",
+      "non": "none",
+      "hea": "heading"
+    }
+  }
+}
