@@ -1458,7 +1458,8 @@
         "nn.neu.sin.ind.gen",
         "nn.neu.sin.def.gen",
         "nn.neu.plu.ind.gen",
-        "nn.neu.plu.def.gen nn.neu.sms"
+        "nn.neu.plu.def.gen",
+        "nn.neu.sms"
       ],
       "paradigm": [
         [
@@ -2033,7 +2034,8 @@
         "nn.neu.sin.ind.gen",
         "nn.neu.sin.def.gen",
         "nn.neu.plu.ind.gen",
-        "nn.neu.plu.def.gen nn.neu.sms"
+        "nn.neu.plu.def.gen",
+        "nn.neu.sms"
       ],
       "paradigm": [
         [
@@ -2807,12 +2809,22 @@
         "vb.prt.akt",
         "vb.sup.akt",
         "vb.imp",
-        "pc.prs.utr/neu.sin/plu.ind/def.nom jj.pos.utr.sin.ind.nom jj.pos.neu.sin.ind.nom jj.pos.utr/neu.sin.def.nom jj.pos.utr/neu.plu.ind/def.nom",
+        "pc.prs.utr/neu.sin/plu.ind/def.nom",
+        "jj.pos.utr.sin.ind.nom",
+        "jj.pos.neu.sin.ind.nom",
+        "jj.pos.utr/neu.sin.def.nom",
+        "jj.pos.utr/neu.plu.ind/def.nom",
         "vb.inf.sfo",
         "vb.prs.sfo",
-        "vb.prt.sfo vb.sup.sfo -",
+        "vb.prt.sfo",
+        "vb.sup.sfo",
+        "-",
         "vb.prs.sfo",
-        "pc.gen - - - -"
+        "pc.gen",
+        "-",
+        "-",
+        "-",
+        "-"
       ],
       "paradigm": [
         [
@@ -2848,11 +2860,22 @@
         "vb.prt.sfo",
         "vb.sup.sfo",
         "vb.imp",
-        "pc.prs.utr/neu.sin/plu.ind/def.nom jj.pos.utr.sin.ind.nom jj.pos.neu.sin.ind.nom jj.pos.utr/neu.sin.def.nom jj.pos.utr/neu.plu.ind/def.nom",
+        "pc.prs.utr/neu.sin/plu.ind/def.nom",
+        "jj.pos.utr.sin.ind.nom",
+        "jj.pos.neu.sin.ind.nom",
+        "jj.pos.utr/neu.sin.def.nom",
+        "jj.pos.utr/neu.plu.ind/def.nom",
         "vb.inf.sfo",
-        "vb.prs.sfo vb.prt.sfo vb.sup.sfo -",
+        "vb.prs.sfo",
+        "vb.prt.sfo",
+        "vb.sup.sfo",
         "-",
-        "pc.gen - - - -"
+        "-",
+        "pc.gen",
+        "-",
+        "-",
+        "-",
+        "-"
       ],
       "paradigm": [
         [
@@ -2912,11 +2935,22 @@
         "vb.prt.akt",
         "vb.sup.akt",
         "vb.imp",
-        "pc.prs.utr/neu.sin/plu.ind/def.nom jj.pos.utr.sin.ind.nom jj.pos.neu.sin.ind.nom jj.pos.utr/neu.sin.def.nom jj.pos.mas.sin.def.nom",
+        "pc.prs.utr/neu.sin/plu.ind/def.nom",
+        "jj.pos.utr.sin.ind.nom",
+        "jj.pos.neu.sin.ind.nom",
+        "jj.pos.utr/neu.sin.def.nom",
+        "jj.pos.mas.sin.def.nom",
         "vb.inf.sfo",
-        "vb.prs.sfo vb.prt.sfo vb.sup.sfo -",
+        "vb.prs.sfo",
+        "vb.prt.sfo",
+        "vb.sup.sfo",
         "-",
-        "pc.gen - - - vb.prs.sfo"
+        "-",
+        "pc.gen",
+        "-",
+        "-",
+        "-",
+        "vb.prs.sfo"
       ],
       "paradigm": [
         [
@@ -6071,11 +6105,22 @@
         "vb.prt.akt",
         "vb.sup.akt",
         "vb.imp",
-        "pc.prs.utr/neu.sin/plu.ind/def.nom jj.pos.utr.sin.ind.nom jj.pos.neu.sin.ind.nom jj.pos.utr/neu.sin.def.nom jj.pos.mas.sin.def.nom",
+        "pc.prs.utr/neu.sin/plu.ind/def.nom",
+        "jj.pos.utr.sin.ind.nom",
+        "jj.pos.neu.sin.ind.nom",
+        "jj.pos.utr/neu.sin.def.nom",
+        "jj.pos.mas.sin.def.nom",
         "vb.inf.sfo",
-        "vb.prs.sfo vb.prt.sfo vb.sup.sfo -",
+        "vb.prs.sfo",
+        "vb.prt.sfo",
+        "vb.sup.sfo",
         "-",
-        "pc.gen - - - vb.prs.sfo"
+        "-",
+        "pc.gen",
+        "-",
+        "-",
+        "-",
+        "vb.prs.sfo"
       ],
       "paradigm": [
         [
