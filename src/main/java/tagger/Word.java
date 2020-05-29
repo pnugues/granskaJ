@@ -318,8 +318,6 @@ public class Word extends WordTag {
             out.print('\n');
             out.print('\t');
         }
-        WordTag temp = new WordTag();
-        temp.print(out);
         if (Settings.xPrintAllWordTags)
             for (WordTag wt = next(); wt != null; wt = wt.next()) {
                 out.print('\t');
@@ -330,9 +328,7 @@ public class Word extends WordTag {
     void printTags(PrintStream out) throws IOException {
         //  out << std::endl << tab;
         out.print('\t');
-        WordTag temp = new WordTag();
-        temp.print(out);
-        for (WordTag wt = next(); wt != null; wt = wt.next()) {
+        for (WordTag wt = this; wt != null; wt = wt.next()) {
             out.print('\t');
             wt.printTag(out);
         }
