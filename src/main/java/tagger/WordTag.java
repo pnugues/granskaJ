@@ -226,6 +226,10 @@ public class WordTag implements Serializable {
         }
         return (Word) wt;
     }
+
+    public String toString() {
+        return getWord() + " " + getTag();
+    }
 }
 
 /*

@@ -444,13 +444,21 @@ public class WordLexicon extends LinkedHashMap<String, Word> implements Serializ
                     if (t.originalTag().isRuleBase() ||
                             (t.isRuleBase2() && wt.lemma(0) != null &&
                                     w2.getString().compareTo(wt.lemma(0).String()) == 0)) {
-                        int index = inflects.findRuleIndex(string, ruleName, (char) t.originalTag().getIndex());
+                        /*if (string.equals("regel")) {
+                            System.out.println(string + "\t" + ruleName + "\t" + t.originalTag().getIndex());
+                        }*/
+                        int index = inflects.findRuleIndex(string, ruleName, (char) t.originalTag().getIndex()) ;
+                        /*if (string.equals("regel"))
+                            System.out.println("Inx: " + index);*/
                         if (index != InflectRule.INFLECT_NO_RULE) {
+                            //System.out.println(string + "\t" + ruleName + "\t" + index);
                             addExtraRule(wt, (short) index);
                             ok = true;
                         }
                     }
                 }
+                /*if (string.equals("regel"))
+                    System.out.println(ok);*/
                 if (!ok)
                     Message.invoke(MessageType.MSG_MINOR_WARNING, "inflection.lex, rule not applicable for word", w2.getString());
             } else // just to mark the matching rule as used:
@@ -1144,15 +1152,15 @@ int WordLexicon::CheckForWordTags(NewWord *nw, Word *w) {
 
     boolean addTagsDerivedFromLemma(NewWord w, WordTag lemma) {
         boolean ok = false;
-        //  std::cout << "adding word-tags to " << w << " derivable from " << lemma << std::endl;
-
+        //System.out.println("adding word-tags to " + w + " derivable from " + lemma);
+        //System.out.println(lemma.nInflectRules());
         for (int j = 0; j < lemma.nInflectRules(); j++) {
+            //System.out.println("passe2");
             // jbfix: if no rule found, exit gracefully
             int ir = lemma.inflectRule(j);
             if (ir == InflectRule.INFLECT_NO_RULE)
                 return false;
             InflectRule r = inflects.rule(ir);
-
             for (int i = 0; i < r.getNForms(); i++) {
                 String ss = r.apply(lemma.String(), i);
                 if (ss != null && ss.compareTo(w.getString()) == 0 &&
@@ -1191,6 +1199,7 @@ int WordLexicon::CheckForWordTags(NewWord *nw, Word *w) {
                 WordTag suffixLemma = suffix.lemma(j);
                 string = string.substring(0, len) + suffixLemma.String(); // string is the wanted lemma-string now
                 Tag lemmaTag = suffixLemma.getTag().originalTag();
+                //System.out.println("SL: " + lemmaTag);
                 Word w2 = get(string);
                 if (w2 != null) {     // main lexicon lemma word exists
                     checkedWords[nChecked++] = w2;
@@ -1211,6 +1220,9 @@ int WordLexicon::CheckForWordTags(NewWord *nw, Word *w) {
                     if (lemma == null)
                         lemma = newWords.addWordTag(w3, lemmaTag);
                     lemma.lemma = lemma; // funny
+                    //System.out.println("Str: " + suffixLemma.nInflectRules());
+                    //System.out.println(suffixLemma.inflectRule);
+                    //System.out.println(suffixLemma.nExtraInflectRules);
                     for (int k = 0; k < suffixLemma.nInflectRules(); k++) {
                         lemma.inflectRule = (short) suffixLemma.inflectRule(k);
                         if (addTagsDerivedFromLemma(w, lemma))

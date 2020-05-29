@@ -10,12 +10,12 @@ import java.io.PrintStream;
 public class NewWord extends Word {
 
     public static int MAX_WORD_TAG_SUFFIXES = 8;
-    public boolean isAnalyzed = true;
-    public boolean isCompoundAnalyzed = true;
-    public boolean isDerived = true;
+    public boolean isAnalyzed;
+    public boolean isCompoundAnalyzed;
+    public boolean isDerived;
     private WordTag[] suffix = new WordTag[MAX_WORD_TAG_SUFFIXES];
     private int nSuffixes;
-    private boolean isAlwaysCapped = true;
+    private boolean isAlwaysCapped;
 
     public NewWord() {
         isWord = true;
@@ -109,7 +109,7 @@ public class NewWord extends Word {
     }
 
     boolean addSuffixes(Word w) {
-        for (WordTag wt = w; wt != null; wt = wt.next())
+        for (WordTag wt = w; wt != null; wt = wt.next()) {
             if (!wt.getTag().isCompoundStop()) {
                 if (nSuffixes() >= MAX_WORD_TAG_SUFFIXES) {
                     Message.invoke(MessageType.MSG_MINOR_WARNING, "too many suffixes for word", getString());
@@ -117,6 +117,7 @@ public class NewWord extends Word {
                 }
                 suffix[nSuffixes++] = wt;
             }
+        }
         return true;
     }
 

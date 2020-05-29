@@ -78,14 +78,15 @@ public class InflectLexicon implements Serializable {
     }
 
     short addString(String s) {
+        // Returns the index of the rule and not the index of the character
         for (short i = 0; i < InflectRule.strings.size(); i++)
             if (InflectRule.strings.get(i).compareTo(s) == 0)
                 return i;
         int len = s.length() + 1;
         Ensure.ensure(ruleStringLen + len < Short.MAX_VALUE);
         InflectRule.strings.add(s);
-        //ruleStringLen += len;
-        //Pn. This is useless
+        //Pn. The next instruction is useless
+        ruleStringLen += len;
         return (short) (InflectRule.strings.size() - 1);
     }
 
@@ -99,8 +100,6 @@ public class InflectLexicon implements Serializable {
         JSONObject inflectJSON = new JSONObject(inflectJSONString);
         JSONArray inflect = inflectJSON.getJSONArray("inflection.rules");
 
-        //PN. The code below is probably wrong
-        // nRules is the total number of lines in the original file
         nRules = 0;
         for (int i = 0; i < inflect.length(); i++) {
             InflectRule r = rules[nRules];
@@ -127,27 +126,35 @@ public class InflectLexicon implements Serializable {
                     r.tagIndex[j] = Tag.TAG_INDEX_NONE;
                 }
             }
+            //System.out.println("J: " + j);
             for (; j < InflectRule.MAX_INFLECTION_FORMS; j++) {
-                rules[i].tagIndex[j] = Tag.TAG_INDEX_NONE;
+                r.tagIndex[j] = Tag.TAG_INDEX_NONE;
             }
+            /*for (j = 0; j < InflectRule.MAX_INFLECTION_FORMS; j++) {
+                System.out.println(r.tagIndex[j]);
+            }*/
+            // TODO The line below should be removed. But provokes a crash after. Understand why
             nRules++;
             JSONArray paradigms = infl_rules.getJSONArray("paradigm");
             //System.out.println("Paradigms: " + paradigms);
             // TODO PN. The code below is probably wrong
-            // nRules is the total number of lines in the original file
+            // nRules is the total number of rules in the original file
+            // That is number of lines - number of lines starting with a $
             for (int l = 0; l < paradigms.length(); l++) {
-                JSONArray paradigm = (JSONArray) paradigms.get(0);
+                JSONArray paradigm = (JSONArray) paradigms.get(l);
+                //System.out.println(paradigm);
                 r = rules[nRules];
-                for (j = 0; j < InflectRule.MAX_INFLECTION_FORMS; j++)
-                    r.tagIndex[j] = rules[nRules - 1].tagIndex[j];
-
+                if (nRules != 0) {
+                    for (j = 0; j < InflectRule.MAX_INFLECTION_FORMS; j++) {
+                        r.tagIndex[j] = rules[nRules - 1].tagIndex[j];
+                    }
+                }
                 r.nameIndex = addString((String) paradigm.get(0));
-                String suffixes = (String) paradigm.get(0);
+                String suffixes = (String) paradigm.get(1);
                 List<String> infl_suffixes = new ArrayList<>();
                 for (int m = 2; m < paradigm.length(); m++) {
                     infl_suffixes.add((String) paradigm.get(m));
                 }
-
                 r.nEndings = 0;
                 String[] ss = suffixes.split(" *, *");
                 for (int m = 0; m < ss.length; m++) {
@@ -173,6 +180,7 @@ public class InflectLexicon implements Serializable {
                         r.formIndex[r.nForms] = addString(current_suffix);
                     }
                 }
+                //System.out.println("\tRNf: " + r.nForms);
                 for (int k = rules[nRules].nForms; k < InflectRule.MAX_INFLECTION_FORMS; k++)
                     r.formIndex[k] = (short) InflectRule.INFLECTION_FORM_NONE;
                 r.nForms++;
