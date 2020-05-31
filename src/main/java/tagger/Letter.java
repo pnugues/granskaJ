@@ -291,23 +291,26 @@ public class Letter {
     }
 
     static String space2Punct(String s) {
-        StringBuffer temp = new StringBuffer(s);
+        StringBuffer t = new StringBuffer(s);
         int s_inx = 0;
         int t_inx = 0;
         for (; s_inx < s.length(); s_inx++, t_inx++) {
             if (isSpace(s.charAt(s_inx)) || s.charAt(s_inx) == '.') {
-                temp.setCharAt(t_inx, '.');
-                while (isSpace(s.charAt(s_inx + 1)) || IsPunct(s.charAt(s_inx + 1))) {
+                t.setCharAt(t_inx, '.');
+                while (s_inx < s.length() - 1 &&
+                        (isSpace(s.charAt(s_inx + 1)) ||
+                                IsPunct(s.charAt(s_inx + 1)))) {
                     s_inx++;
                 }
             } else {
-                temp.setCharAt(t_inx, s.charAt(s_inx));
+                t.setCharAt(t_inx, s.charAt(s_inx));
             }
         }
-        if (temp.charAt(t_inx - 1) != '.') {
-            temp.setCharAt(t_inx++, '.');
+        if (t.charAt(t_inx - 1) != '.') {
+            t.append('.');
+            t_inx++;
         }
-        s = temp.toString();
+        s = t.toString();
         return s;
     }
 

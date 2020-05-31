@@ -78,8 +78,7 @@ TOKEN_.*                     {return Yytoken.TOKEN_UNKNOWN;}
 {TIME2}                      {return Yytoken.TOKEN_TIME;}
 {PARAGRAPH}                  {return Yytoken.TOKEN_PARAGRAPH;}
 
-{C}({DOT}{CV})*{DOT}{C}\.?/{NL}   {return Yytoken.TOKEN_PARAGRAPH;}
-
+{C}({DOT}{CV})*{DOT}{C}\.?/{NL}   {return Yytoken.TOKEN_ABBREVIATION;}
 ({LWORD}\.{SPACE}*)*dr\.?/{NL}              {return Yytoken.TOKEN_ABBREVIATION;}
 [eo]{DOT}?dyl\.?/{NL}       {return Yytoken.TOKEN_ABBREVIATION;}
 f{DOT}?(ö|Ö)\.?/{NL}     {return Yytoken.TOKEN_ABBREVIATION;}
