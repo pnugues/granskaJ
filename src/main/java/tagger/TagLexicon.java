@@ -70,7 +70,7 @@ public class TagLexicon extends LinkedHashMap<String, Tag> {
     float Pt3_t1t2(int t1, int t2, int t3) {   // P(t3 | t1, t2)
         if (ttOff[t1][t2] >= 0) {
             TagTrigram t = ttt[ttOff[t1][t2]];
-            for (int i = 0; ttt[ttOff[t1][t2] + i].tag3 < t2; i++)
+            for (int i = 0; ttt[ttOff[t1][t2] + i].tag3 <= t3; i++)
                 t = ttt[ttOff[t1][t2] + i];
             if (t.tag3 == t3 && t.tag2 == t2)
                 return t.pf_prob;
@@ -211,6 +211,14 @@ public class TagLexicon extends LinkedHashMap<String, Tag> {
 	  xLambdaBi*bigramFreqs[t.tag2][t.tag3]*tagL.get(t.tag2).FreqInv()+
 	  xLambdaTri*t.pf_freq*(float)pow(bigramFreqs[t.tag1][t.tag2], xLambdaTriExp-1);
 	  ensure(t.pf_prob > 0); */
+                    /*if (tagL.get(t.tag1).toString().equals("sen.per") &&
+                            tagL.get(t.tag2).toString().equals("dt.utr.sin.ind") &&
+                            tagL.get(t.tag3).toString().equals("jj.pos.utr.sin.ind.nom")) {
+                        System.out.println("!\t" + tagL.get(t.tag1) + "\t" +
+                                tagL.get(t.tag2) + "\t" +
+                                tagL.get(t.tag3)
+                                + "\t" + t.pf_prob);
+                    }*/
                 }
             else
                 Message.invoke(MessageType.MSG_MINOR_WARNING, "xLambdaTriExp cannot exceed 0.6 (not tested)");

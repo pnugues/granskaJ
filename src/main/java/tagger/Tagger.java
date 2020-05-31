@@ -482,6 +482,8 @@ public class Tagger extends Lexicon {
                     for (int z = 0; z < g0.n; z++) {
                         Tag tag0 = g0.tag[z];
                         double prob = g1.prob[v][z] * (getTags().Pt3_t1t2(tag0, tag1, tag2)); //+biProb);//jonas, this sometimes gives UMR-error
+                        //System.out.println(tag0 + "\t" + tag1 + "\t" + tag2);
+                        //System.out.println(g1.prob[v][z] + "\t" + getTags().Pt3_t1t2(tag0, tag1, tag2) +"\t" + prob);
                         if (prob > best) {
                             best = prob;
                             g2.prev[u][v] = (char) z; // remember which tag in position 0 that gave the best probability
