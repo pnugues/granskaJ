@@ -18,8 +18,7 @@ from a program by Johan Carlberger
 
 public class Tagger extends Lexicon {
 
-    static int TOKEN_BUF_CHUNK = 13000;//50000; //TODO PN. Changed from 13000. The memory expansion does not work. Understand why
-
+    static int TOKEN_BUF_CHUNK = 13000;
     Tokenizer tokenizer;
     Text theText = new Text();
 
