@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'se.lth.cs.nlp.granska'
+version = '1.0'
+
+sourceCompatibility = 12
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    mainClassName = "tagger.Main"
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'granskaj',
+                'Implementation-Version': version,
+                'Main-Class': 'tagger.Main'
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
