@@ -18,7 +18,7 @@ from a program by Johan Carlberger
 
 public class Tagger extends Lexicon {
 
-    static int TOKEN_BUF_CHUNK = 50000; //TODO PN. Changed from 13000. The memory expansion does not work. Understand why
+    static int TOKEN_BUF_CHUNK = 13000;//50000; //TODO PN. Changed from 13000. The memory expansion does not work. Understand why
 
     Tokenizer tokenizer;
     Text theText = new Text();
@@ -664,6 +664,9 @@ public class Tagger extends Lexicon {
             if (nTokens >= tokensBufSize) {
                 tokensBufSize *= 2;      //jonas      tokensBufSize += TOKEN_BUF_CHUNK;
                 WordToken[] tok = new WordToken[tokensBufSize]; // new OK
+                for (int i = 0; i < tok.length; i++)
+                    tok[i] = new WordToken();
+
                 if (nTokens >= 0) System.arraycopy(theTokens, 0, tok, 0, nTokens);
                 theTokens = tok;
                 System.err.println("REallocated space for " + tokensBufSize + " tokens");
