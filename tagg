@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -z "$(echo $@)" ]
+then
+./gradlew run --console=plain -q
+else
+./gradlew run --console=plain -q --args="$(echo $@)"
+fi
