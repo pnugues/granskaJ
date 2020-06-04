@@ -8,7 +8,7 @@ community, used it in their projects.
 
 As the program was written in a non-evolvable C++, it got more and more complicated to compile. Every time I changed my computer,
 I had to customize the Makefile. With the UTF-8 and C++ evolutions, I thought that one day, I could no longer compile it and 
-I would have to dump all the programs that used it.
+I would have to dump all the programs that depends on it.
 
 I tried to convince people to translate Granska in Java, but I did not find any candidate. So with the Corona crisis, 
 I decided to translate the program myself. I also did it for the lex files that are now in JSON. And here is the result.
