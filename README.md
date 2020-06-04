@@ -10,7 +10,7 @@ As the program was written in a non-evolvable C++, it got more and more complica
 I had to customize the Makefile. With the UTF-8 and C++ evolutions, I thought that one day, I could no longer compile it and 
 I would have to dump all the programs that depends on it.
 
-I tried to convince people to translate Granska in Java, a language that I believe makes it easier to maintain programs, but I could not find any candidate. So with the Corona crisis, 
+I tried to convince people to translate Granska in Java, a language that I believe makes it easier to maintain programs. I could not find any candidate to spend some time on this. So with the Corona crisis, 
 I decided to translate it myself. I also did it for the lex files that are now in JSON. And here is the result.
 
 So, for the people, who loved Granska, granskaJ is an equivalent in Java.
