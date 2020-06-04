@@ -15,4 +15,4 @@ I decided to translate it myself. I also did it for the lex files that are now i
 
 So, for the people, who loved Granska, granskaJ is an equivalent in Java.
 
-This new version is far from being optimized and hopefully some people will find this translation useful and will decide to improve it.
+This new version is far from being optimized. Hopefully, some people will find this translation useful and will decide to improve it.
