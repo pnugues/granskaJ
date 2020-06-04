@@ -6,6 +6,7 @@ import token.Tokenizer;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -341,6 +342,81 @@ public class WordToken {
                 }
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        StringWriter out = new StringWriter();
+        if (Settings.xOutputWTL) {
+            if (getWord() != null) {
+                out.write(lexString());
+                out.write('\t');
+                out.write(getSelectedTag().toString());
+                out.write('\t');
+                out.write(lemmaString());
+                out.write('\n');
+            } else
+                Message.invoke(MessageType.MSG_WARNING, "no word");
+            return out.toString();
+        }
+
+        boolean printTag = Settings.xPrintSelectedTag;
+
+        Word w = getWord();
+        if (w != null) {
+            if (Settings.xPrintHTML) {
+                out.write(Letter.str2HTML(realString()));
+            } else {
+                if (realString() != null) {// jonas, program crashes when RealString() is null otherwise
+                    String s = realString();
+                    for (int i = 0; i < s.length(); i++) {
+                        if (Letter.isSpace(s.charAt(i))) {
+                            out.write(' ');
+                            while (Letter.isSpace(s.charAt(i + 1))) {
+                                i++;
+                            }
+                        } else {
+                            out.write(s.charAt(i));
+                        }
+                    }
+                }
+            }
+
+            if (Settings.xPrintWordInfo) {
+                out.write(" [");
+                if (w.isNewWord()) {
+                    ((NewWord) w).printInfo(out);
+                } else {
+                    w.printInfo(out);
+                }
+                out.write(' ');
+                out.write(getToken().toString());
+                out.write(']');
+                if (isFirstInSentence()) {
+                    out.write('~');
+                }
+            }
+        } else {
+            out.write("(null word-token)");
+        }
+        if (printTag) {
+            if (Settings.xPrintAllWordTags) {
+                w.printTags(out);
+            } else {
+                out.write('\t');
+                out.write(getSelectedTag().toString());
+                out.write('\t');
+            }
+        }
+        if (Settings.xPrintLemma) {
+            out.write(lemmaString());
+            out.write('\t');
+        }
+        if (hasTrailingSpace())
+            out.write(' ');
+
+        out.flush();
+        return out.toString();
     }
 }
 

@@ -6,6 +6,7 @@ import common.MessageType;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.StringWriter;
 
 public class Word extends WordTag {
     public static int MAX_WORD_LENGTH = 80;      // can be set arbitrarily
@@ -325,6 +326,15 @@ public class Word extends WordTag {
             }
     }
 
+    void printTags(StringWriter out) {
+        //  out << std::endl << tab;
+        out.write('\t');
+        for (WordTag wt = this; wt != null; wt = wt.next()) {
+            out.write('\t');
+            wt.printTag(out);
+        }
+    }
+
     void printTags(PrintStream out) throws IOException {
         //  out << std::endl << tab;
         out.print('\t');
@@ -332,6 +342,19 @@ public class Word extends WordTag {
             out.print('\t');
             wt.printTag(out);
         }
+    }
+
+    void printInfo(StringWriter out) {
+        out.write(String.valueOf(getFreq()));
+        out.write(' ');
+        out.write(String.valueOf(getTextFreq()));
+        out.write(' ');
+        if (isExtra()) out.write('E');
+        if (isForeign()) out.write("f");
+        if (mayBeCapped()) out.write("m");
+        if (isCompoundBeginOK()) out.write('b');
+        if (isCompoundEndOK()) out.write('q');
+        if (isSpellOK()) out.write('s');
     }
 
     void printInfo(PrintStream out) throws IOException {

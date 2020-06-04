@@ -7,6 +7,7 @@ import common.MessageType;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Serializable;
+import java.io.StringWriter;
 
 public class WordTag implements Serializable {
 
@@ -167,6 +168,10 @@ public class WordTag implements Serializable {
             out.print('t');
         if (isExtraWordTag())
             out.print('e');
+    }
+
+    void printTag(StringWriter out) {
+        out.write(getTag().toString());
     }
 
     void printTag(PrintStream out) throws IOException {

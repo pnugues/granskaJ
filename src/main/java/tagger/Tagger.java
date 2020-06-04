@@ -7,7 +7,9 @@ import common.Timer;
 import token.Tokenizer;
 
 import java.io.*;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Vector;
 
 /*
@@ -580,7 +582,7 @@ public class Tagger extends Lexicon {
                     sumU += g[i].prob[g[i].selected][vv] / g[i - 1].prob[vv][g[i].prev[g[i].selected][vv]];
                 }
                 double a = sumU / sumProbs;
-                System.out.println(a + "\t" + s.getWordToken(i));
+                System.out.println(String.format(Locale.UK, "%1.06f", a) + "\t" + s.getWordToken(i));
             }
         }
     }
