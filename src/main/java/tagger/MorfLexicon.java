@@ -19,11 +19,7 @@ public class MorfLexicon extends LinkedHashMap<String, Word> {// extends HashArr
     public static int MAX_LAST_CHARS = 5;
     public static int MIN_LAST_CHARS = 1;
     // PN. Temporary variable before I understand how the whole stuff works
-
-    //Map<String, Integer> wordFreq;
-    //Map<String, Map<String, Integer>> wordPOSFreqs;
     List<String> morfL;
-    //Map<String, Integer> morfMap;
     private String lexiconDir;
     private WordTag[] more;
     private char[] strings;

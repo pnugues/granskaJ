@@ -21,7 +21,6 @@ public class TagLexicon extends LinkedHashMap<String, Tag> {
     static float[][] bigramProbs = new float[Tag.MAX_TAGS][Tag.MAX_TAGS];
     static int[][] ttOff = new int[Tag.MAX_TAGS][Tag.MAX_TAGS];
     static int CT = 0, CTT = 0, CTTT = 0, CWT = 0;
-    //Map<String, Tag> tagMap;
     public List<Tag> tagL; //PN. This list could certainly be removed
     //  HashArray<TagTrigram> tagTrigrams;
     TagTrigram[] ttt;

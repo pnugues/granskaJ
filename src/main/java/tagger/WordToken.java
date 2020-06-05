@@ -34,7 +34,6 @@ public class WordToken {
     boolean inserted;
     boolean marked;         // used by rules
     boolean marked2;         // used by rules
-    //PN Added
     boolean xAcceptSpellCapitalWords = true;
     boolean xAcceptSpellProperNouns = true;
     boolean xAcceptAllWordsInCompounds = true;
