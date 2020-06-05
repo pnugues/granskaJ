@@ -51,7 +51,7 @@ public class WordTag implements Serializable {
     }
 
     public WordTag next() {
-        if (next == null) return null;
+        //if (next == null) return null;
         return (next.isWord() ? null : next);
     }
 
@@ -223,11 +223,11 @@ public class WordTag implements Serializable {
     Word getWord() {
         WordTag wt = this;
         while (!wt.isWord()) {
-            if (wt.next == null)
-                break;
+            /*if (wt.next == null)
+                break;*/
             wt = wt.next;
-            if (wt == this)
-                Message.invoke(MessageType.MSG_ERROR, "infinite loop in WordTag::GetWord()");
+            /*if (wt == this)
+                Message.invoke(MessageType.MSG_ERROR, "infinite loop in WordTag::GetWord()");*/
         }
         return (Word) wt;
     }

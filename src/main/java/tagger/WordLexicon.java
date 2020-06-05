@@ -466,7 +466,7 @@ public class WordLexicon extends LinkedHashMap<String, Word> implements Serializ
         }
     }
 
-    void loadSlow(String dir, TagLexicon tgs, NewWordLexicon n) throws IOException {
+    void loadSlow(final String dir, final TagLexicon tgs, NewWordLexicon n) throws IOException {
         tags = tgs;
         lexiconDir = dir;
         newWords = n;
@@ -480,7 +480,7 @@ public class WordLexicon extends LinkedHashMap<String, Word> implements Serializ
             JSONArray item = (JSONArray) cw.get(i);
             Word w = new Word();
             w.init();
-            w.next = null;
+            //w.next = null;
             w.freq = (int) item.get(0);
             w.string = (String) item.get(1);
             int len = w.string.length();
@@ -559,32 +559,17 @@ public class WordLexicon extends LinkedHashMap<String, Word> implements Serializ
             Ensure.ensure(t != null);
             WordTag wt;
             if (w.getTagIndex() != Tag.TAG_INDEX_NONE) {
-                int k = 0;
-                for (wt = w; wt.next() != null; wt = wt.next()) {
-                    //PN. Here BUG with the creation of an infinite list somewhere.
-                    //System.out.print(k + "\t" + wt.lemma + " " + wt);
-                    k++;
-                }
-                // PN. Remove the comments below for the final program
-                //System.out.println("Tag number per word (ambiguity):" + k);
-                // PN. Original instruction
-                //wt = wt.next = more[j];
-                //wt.Init(w, false);
-                // PN. Begin Replacement
+                for (wt = w; wt.next() != null; wt = wt.next());
                 // TODO If we replace WordTag() with Word(), the lemmatization works for known words
                 wt = wt.next = more[j];
                 wt.init(w, false);
-                //wt = wt.next;
-                //wt.isWord = false;
-                //more[j] = wt;
-                // PN. End replacement
                 j++;
                 if (j > CMW)
                     Message.invoke(MessageType.MSG_ERROR, "too many word-tags in cwtl at line", Integer.toString(i + 1));
             } else {
                 wt = w;
             }
-            wt.tagIndex = (char) t.getIndex();
+            wt.tagIndex = t.getIndex();
             wt.tagFreq = freq;
             if (t.isProperNoun())
                 w.mayBeCapped = true;
