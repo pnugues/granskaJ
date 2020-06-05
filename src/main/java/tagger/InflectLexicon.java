@@ -85,7 +85,7 @@ public class InflectLexicon implements Serializable {
         int len = s.length() + 1;
         Ensure.ensure(ruleStringLen + len < Short.MAX_VALUE);
         InflectRule.strings.add(s);
-        //Pn. The next instruction is useless
+        //PN. The next instruction is useless
         ruleStringLen += len;
         return (short) (InflectRule.strings.size() - 1);
     }
@@ -105,7 +105,6 @@ public class InflectLexicon implements Serializable {
             InflectRule r = rules[nRules];
             JSONObject infl_rules = (JSONObject) inflect.get(i);
             JSONArray tagStrings = infl_rules.getJSONArray("feat_infl");
-            //System.out.println("Features: " + tagStrings);
             boolean ruleBase = true;
 
             int j;
@@ -114,35 +113,26 @@ public class InflectLexicon implements Serializable {
                 t.string = ((String) tagStrings.get(j));
                 if (t.string.compareTo("-") != 0) {
                     Tag t2 = tags.get(t.string);
-                    if (t2 == null)
+                    if (t2 == null) {
                         Message.invoke(MessageType.MSG_WARNING, "unknown tag in inflection.rules:",
                                 t.string);//jonas 	    Message(MSG_ERROR, "unknown tag in inflection.rules:", t.String());
-                    else {
+                    } else {
                         r.tagIndex[j] = t2.getIndex();
-                        if (j == 0)
+                        if (j == 0) {
                             t2.ruleBase = true;
+                        }
                     }
                 } else {
                     r.tagIndex[j] = Tag.TAG_INDEX_NONE;
                 }
             }
-            //System.out.println("J: " + j);
             for (; j < InflectRule.MAX_INFLECTION_FORMS; j++) {
                 r.tagIndex[j] = Tag.TAG_INDEX_NONE;
             }
-            /*for (j = 0; j < InflectRule.MAX_INFLECTION_FORMS; j++) {
-                System.out.println(r.tagIndex[j]);
-            }*/
-            // TODO The line below should be removed. But provokes a crash after. Understand why
-            nRules++;
             JSONArray paradigms = infl_rules.getJSONArray("paradigm");
-            //System.out.println("Paradigms: " + paradigms);
-            // TODO PN. The code below is probably wrong
-            // nRules is the total number of rules in the original file
-            // That is number of lines - number of lines starting with a $
             for (int l = 0; l < paradigms.length(); l++) {
+                nRules++;
                 JSONArray paradigm = (JSONArray) paradigms.get(l);
-                //System.out.println(paradigm);
                 r = rules[nRules];
                 if (nRules != 0) {
                     for (j = 0; j < InflectRule.MAX_INFLECTION_FORMS; j++) {
@@ -180,11 +170,9 @@ public class InflectLexicon implements Serializable {
                         r.formIndex[r.nForms] = addString(current_suffix);
                     }
                 }
-                //System.out.println("\tRNf: " + r.nForms);
                 for (int k = rules[nRules].nForms; k < InflectRule.MAX_INFLECTION_FORMS; k++)
                     r.formIndex[k] = (short) InflectRule.INFLECTION_FORM_NONE;
                 r.nForms++;
-                nRules++;
             }
         }
         isLoaded = true;

@@ -287,7 +287,7 @@ public class WordLexicon extends LinkedHashMap<String, Word> implements Serializ
     }
 
     void addExtraRule(WordTag wt, short ruleIndex) {
-        //std::cout << "Added '" << wt.String() << "'" << std::endl;
+        //System.out.println("Added '" + wt.String() + "'");
         if (wt.nInflectRules() == 0) {
             wt.inflectRule = ruleIndex;
             return;
