@@ -31,12 +31,7 @@ public class Lexicon {
         Ensure.ensure(tags.isLoaded() == false);
         String wDir = "";
         wDir = Paths.get(dir, "tags").toString();
-        if (Settings.xNofast) {
-            tags.loadSlow(wDir);
-        } else if (!tags.loadFast(wDir, false)) {
-            tags.loadSlow(wDir);
-            tags.save();
-        }
+        tags.loadSlow(wDir);
         return TagLexicon.isLoaded();
     }
 
@@ -133,33 +128,15 @@ public class Lexicon {
     }
 
     void loadWords(String dir, Tagger tagger) throws IOException, ClassNotFoundException {
-        if (Settings.xNofast) {
-            words.loadSlow(dir, tags, newWords);
-            setWordProbs(tagger);
-            return;
-        }
-        boolean fastOK = words.loadFast(dir, tags, newWords, false);
-        if (!fastOK) {
-            words.loadSlow(dir, tags, newWords);
-            setWordProbs(tagger);
-        }
-        if (!fastOK)
-            words.save();
+        words.loadSlow(dir, tags, newWords);
+        setWordProbs(tagger);
+        return;
     }
 
     void loadMorfs(String dir) throws IOException, ClassNotFoundException {
-        if (Settings.xNofast) {
-            morfs.loadSlow(dir, tags);
-            setMorfProbs();
-            return;
-        }
-        boolean fastOK = morfs.loadFast(dir, false);
-        if (!fastOK) {
-            morfs.loadSlow(dir, tags);
-            setMorfProbs();
-        }
-        if (!fastOK)
-            morfs.save();
+        morfs.loadSlow(dir, tags);
+        setMorfProbs();
+        return;
     }
 
     public boolean loadWordsAndMorfs(Tagger tagger, String dir) throws IOException, ClassNotFoundException {

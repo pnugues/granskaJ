@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import token.Tokenizer;
 
-import java.io.*;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -227,63 +227,6 @@ public class TagLexicon extends LinkedHashMap<String, Tag> {
         prevTri = Settings.xLambdaTri;
         prevExp = Settings.xLambdaTriExp;
         prevEps = Settings.xEpsilonTri;
-    }
-
-    boolean save() throws IOException {
-        File fastFile = new File(lexiconDir, "fast");
-        Ensure.ensure(bigramFreqs != null);
-        Message.invoke(MessageType.MSG_STATUS, "saving taglexicon fast...");
-        FileOutputStream fos = new FileOutputStream(fastFile);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(specialTagIndices);
-        oos.writeObject(ttt);
-        oos.writeObject(ttOff);
-        oos.writeObject(nFeatures);
-        oos.writeObject(nFeatureClasses);
-        oos.writeObject(features);
-        oos.writeObject(featureClasses);
-        oos.writeObject(equalFeaturesBitMap);
-        oos.writeObject(bigramProbs);
-        oos.writeObject(bigramFreqs);
-        oos.flush();
-        oos.close();
-        fos.close();
-        /*File.FixOfstream(out, lexiconDir, "fast");
-        File.SetVersion(out, Settings.xVersion);
-        File.WriteVar(out, CT);
-        File.WriteVar(out, CTT);
-        File.WriteVar(out, CTTT);
-        File.WriteVar(out, CWT);*/
-        return true;
-    }
-
-    boolean loadFast(String dir, boolean warn) throws IOException, ClassNotFoundException {
-        lexiconDir = dir;
-
-        File fastFile = new File(lexiconDir, "fast");
-        if (!fastFile.exists()) {
-            return false;
-        }
-
-        FileInputStream fis = new FileInputStream(fastFile);
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        specialTagIndices = (int[]) ois.readObject();
-        ttt = (TagTrigram[]) ois.readObject();
-        ttOff = (int[][]) ois.readObject();
-        nFeatures = (int) ois.readObject();
-        nFeatureClasses = (int) ois.readObject();
-        features = (FeatureValue[]) ois.readObject();
-        featureClasses = (FeatureClass[]) ois.readObject();
-        equalFeaturesBitMap = (BitMap65536) ois.readObject();
-        bigramProbs = (float[][]) ois.readObject();
-        if (bigramFreqs != null) {
-            bigramFreqs = (int[][]) ois.readObject();
-        }
-        ois.close();
-        fis.close();
-        setTags();
-        testFeatures();
-        return true;
     }
 
     //PN. This function now loads the files instead of the metainfo

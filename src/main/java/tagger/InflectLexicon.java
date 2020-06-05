@@ -7,8 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -57,24 +55,6 @@ public class InflectLexicon implements Serializable {
             if (rule.tagIndex[k] == tagIndex)
                 return rule.apply(string, k);
         return null;
-    }
-
-    boolean save(ObjectOutputStream oos) throws IOException {
-        Message.invoke(MessageType.MSG_STATUS, "saving fast inflect lexicon...");
-        oos.writeObject(this);
-        oos.writeObject(InflectRule.strings);
-        oos.writeObject(rules);
-        return true;
-    }
-
-    boolean loadFast(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        Message.invoke(MessageType.MSG_STATUS, "loading inflect lexicon fast...");
-        InflectLexicon il = (InflectLexicon) ois.readObject();
-        // The instruction above replaces the one below
-        //this = (InflectLexicon) File.ReadData(in, "inflects");
-        InflectRule.strings = (List<String>) ois.readObject();
-        rules = (InflectRule[]) ois.readObject();
-        return isLoaded = true;
     }
 
     short addString(String s) {

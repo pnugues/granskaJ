@@ -7,7 +7,6 @@ import common.Timer;
 import token.Tokenizer;
 
 import java.io.*;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Vector;

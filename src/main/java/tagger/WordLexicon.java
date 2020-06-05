@@ -447,7 +447,7 @@ public class WordLexicon extends LinkedHashMap<String, Word> implements Serializ
                         /*if (string.equals("regel")) {
                             System.out.println(string + "\t" + ruleName + "\t" + t.originalTag().getIndex());
                         }*/
-                        int index = inflects.findRuleIndex(string, ruleName, (char) t.originalTag().getIndex()) ;
+                        int index = inflects.findRuleIndex(string, ruleName, (char) t.originalTag().getIndex());
                         /*if (string.equals("regel"))
                             System.out.println("Inx: " + index);*/
                         if (index != InflectRule.INFLECT_NO_RULE) {
@@ -559,7 +559,7 @@ public class WordLexicon extends LinkedHashMap<String, Word> implements Serializ
             Ensure.ensure(t != null);
             WordTag wt;
             if (w.getTagIndex() != Tag.TAG_INDEX_NONE) {
-                for (wt = w; wt.next() != null; wt = wt.next());
+                for (wt = w; wt.next() != null; wt = wt.next()) ;
                 // TODO If we replace WordTag() with Word(), the lemmatization works for known words
                 wt = wt.next = more[j];
                 wt.init(w, false);
@@ -879,48 +879,6 @@ public class WordLexicon extends LinkedHashMap<String, Word> implements Serializ
         return min;
     }
 
-    boolean loadFast(String dir, TagLexicon tgs, NewWordLexicon n, boolean warn) throws IOException, ClassNotFoundException {
-        tags = tgs;
-        lexiconDir = dir;
-        newWords = n;
-        lexiconDir = dir;
-        if (!Files.exists(Paths.get(lexiconDir + "/fast")))
-            return false;
-
-        File fastFile = new File(lexiconDir, "/fast");
-        FileInputStream fis = new FileInputStream(fastFile);
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        /*if (!File.CheckVersion(in, Settings.xVersion)) {
-            Message.invoke(MessageType.MSG_WARNING, "fast word lexicon file obsolete");
-            return false;
-        }
-        Message.invoke(MessageType.MSG_STATUS, "loading word lexicon fast...");
-        File.ReadVar(in, CW);
-        File.ReadVar(in, CWT);
-        File.ReadVar(in, CL);
-        File.ReadVar(in, N_STYLEWORDS);
-        File.ReadVar(in, nExtraRules);*/
-        allocateMemory();
-        ois.readObject();
-        wordL = (List<Word>) ois.readObject();
-        more = (WordTag[]) ois.readObject();
-        strings = (char[]) ois.readObject();
-        nExtraLemmas = (int) ois.readObject();
-        inflects.loadFast(ois);
-        extraRules = (ExtraRules[]) ois.readObject();
-        wordsAlpha = (Word[]) ois.readObject();
-        ois.close();
-        fis.close();
-
-        //SetPointersFromIndices();
-        //LoadStyleWords();
-        if (Settings.xWarnAll)
-            for (int i = 0; i < CW - 1; i++)
-                if (wordsAlpha[i].String().compareTo(wordsAlpha[i + 1].String()) > 0)
-                    System.out.println(wordsAlpha[i] + " " + wordsAlpha[i + 1]);
-        return true;
-    }
-
     //PN. Not sure what it means. May be restore
     /*
     void CompressStrings() {
@@ -974,93 +932,6 @@ public class WordLexicon extends LinkedHashMap<String, Word> implements Serializ
         strings = strings2;
     }*/
 
-    boolean save() throws IOException {
-        if (Files.exists(Paths.get(lexiconDir + "/fast")))
-            return false;
-        Message.invoke(MessageType.MSG_STATUS, "saving fast word lexicon...");
-        // PN. Not sure what the code below means
-        // Check after te code compiles in Java
-        /*
-        for (int i = 0; i < CW; i++) {
-            WordTag wt, next;
-            ( this)[i].string = ( this)[i].string - (size_t) strings;
-            //    words[i].string = words[i].string - (uint)strings;
-            for (wt =&( * this)[i];
-            wt;
-            wt = next){
-                //    for (wt=&words[i]; wt; wt=next) {
-                next = wt.Next();
-                if (next)
-                    wt.next = (WordTag) (wt.next -  more[0]); // i.e. index of wt.next in more
-                else
-                    wt.next = (WordTag) - 1;
-                if (wt.lemma)
-                    if (wt.lemma.IsWord()) {
-                        Ensure.ensure((int) ((Word) wt.lemma -  ( this)[0]) < CW);
-                        //	  Ensure.ensure((int)((Word*)wt.lemma - &words[0]) < CW);
-                        wt.lemma = (WordTag) ((Word ) wt.lemma - & ( this)[0]);
-                        //	  wt.lemma = (WordTag*) ((Word*)wt.lemma - &words[0]);
-                    } else
-                        wt.lemma = (WordTag * (CW + (wt.lemma - & more[0]));
-                else
-                    wt.lemma = (WordTag ) - 1;
-            }
-            wordsAlpha[i] = (Word ) (wordsAlpha[i] -  ( this)[0]);
-            //    wordsAlpha[i] = (Word*) (wordsAlpha[i] - &words[0]);
-        }
-        for (int i = 0; i < nExtraLemmas; i++) {
-            ExtraLemma wtal = extraLemmas[i];
-            if (wtal.lemma.IsWord()) {
-                Ensure.ensure((int) ((Word) wtal.lemma -  ( this)[0]) < CW);
-                //      Ensure.ensure((int)((Word*)wtal.lemma - &words[0]) < CW);
-                wtal.lemma = (WordTag) ((Word) wtal.lemma - ( this)[0]);
-                //      wtal.lemma = (WordTag*) ((Word*)wtal.lemma - &words[0]);
-            } else
-                wtal.lemma = (WordTag) (CW + (wtal.lemma - more[0]));
-            if (wtal.wt.IsWord()) {
-                Ensure.ensure((int) ((Word) wtal.wt -  ( this)[0]) < CW);
-                //      Ensure.ensure((int)((Word*)wtal.wt - &words[0]) < CW);
-                wtal.wt = (WordTag) ((Word) wtal.wt - (  this)[0]);
-                //      wtal.wt = (WordTag*) ((Word*)wtal.wt - &words[0]);
-            } else
-                wtal.wt = (WordTag ) (CW + (wtal.wt -  more[0]));
-        }
-        for (int i = 0; i < nExtraRules; i++) {
-            ExtraRules wtar = extraRules[i];
-            if (wtar.wt.IsWord()) {
-                Ensure.ensure((int) ((Word) wtar.wt -  ( this)[0]) < CW);
-                //      Ensure.ensure((int)((Word*)wtar.wt - &words[0]) < CW);
-                wtar.wt = (WordTag) ((Word *) wtar.wt -  (  this)[0]);
-                //      wtar.wt = (WordTag*) ((Word*)wtar.wt - &words[0]);
-            } else
-                wtar.wt = (WordTag) (CW + (wtar.wt -  more[0]));
-        }*/
-        // PN. may be restore after all compiles
-        /*File.SetVersion(out, xVersion);
-        File.WriteVar(out, CW);
-        File.WriteVar(out, CWT);
-        File.WriteVar(out, CL);
-        File.WriteVar(out, N_STYLEWORDS);
-        File.WriteVar(out, nExtraRules);*/
-
-        File fastFile = new File(lexiconDir, "fast");
-        FileOutputStream fos = new FileOutputStream(fastFile);
-        ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(fos));
-        // PN. To restore when I undestand how to do it
-        //oos.writeObject(this);
-        oos.writeObject(wordL);
-        oos.writeObject(more);
-        oos.writeObject(strings);
-        oos.writeObject(nExtraLemmas);
-        inflects.save(oos);
-        oos.writeObject(extraRules);
-        oos.writeObject(wordsAlpha);
-        oos.flush();
-        oos.close();
-        fos.close();
-        //SetPointersFromIndices();
-        return true;
-    }
 
     void printStatistics() {
         System.out.println("word lexicon statistics: ");

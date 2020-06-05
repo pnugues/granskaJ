@@ -6,7 +6,7 @@ import common.MessageType;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.*;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -190,34 +190,6 @@ public class MorfLexicon extends LinkedHashMap<String, Word> {// extends HashArr
             }
         }
     */
-    boolean loadFast(String dir, boolean warn) throws IOException, ClassNotFoundException {
-        lexiconDir = dir;
-        File fastFile = new File(lexiconDir, "fast");
-        if (!fastFile.exists()) {
-            return false;
-        }
-        FileInputStream fis = new FileInputStream(fastFile);
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        ois.readObject();
-        //stringWordMap = (TreeMap) ois.readObject();
-        ois.close();
-        fis.close();
-        //System.out.println(get("bilar"));
-        //System.out.println(stringWordMap.get("bilar"));
-        return true;
-    }
-
-    boolean save() throws IOException {
-        File fastFile = new File(lexiconDir, "fast");
-        FileOutputStream fos = new FileOutputStream(fastFile);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        //oos.writeObject(morfMap);
-        //oos.writeObject(stringWordMap);
-        oos.flush();
-        oos.close();
-        fos.close();
-        return true;
-    }
 
     /*
         void CompressStrings() {

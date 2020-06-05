@@ -93,7 +93,6 @@ public class Settings {
     static boolean xTaggedText = true;
     static boolean xNewlineMeansNewSentence = false;
     static boolean xNoCollocations = false; //jonas  // johnny removed optConst
-    static boolean xNofast = true;
     // output:
     static boolean xOutputWTL;
     static String xTab = "\t";
