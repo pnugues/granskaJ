@@ -483,13 +483,6 @@ public class Tagger extends Lexicon {
                     for (int z = 0; z < g0.n; z++) {
                         Tag tag0 = g0.tag[z];
                         double prob = g1.prob[v][z] * (getTags().Pt3_t1t2(tag0, tag1, tag2)); //+biProb);//jonas, this sometimes gives UMR-error
-                        //PN. TODO Bug here Pt3_t1t2(sen.que|pn.utr.sin.ind.sub, mad)
-                        // Not the same as in the C++ version
-                        /* UNCOMMENT this to see the bug
-                        System.out.print("Pw2_t2(" + s.getWord(i).string + '|' + tag2 + ")");
-                        System.out.println(" * Pt2_t0t1(" + tag2 + '|' + tag0 + ", " + tag1 + ") = ");
-                        System.out.println(g1.prob[v][z] + " * " + getTags().Pt3_t1t2(tag0, tag1, tag2) + " = " + prob);
-                        */
                         if (prob > best) {
                             best = prob;
                             g2.prev[u][v] = (char) z; // remember which tag in position 0 that gave the best probability

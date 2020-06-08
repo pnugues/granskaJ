@@ -67,7 +67,7 @@ public class TagLexicon extends LinkedHashMap<String, Tag> {
         if (ttOff[t1][t2] >= 0) {
             int index = ttOff[t1][t2];
             TagTrigram t = ttt[index];
-            for (; t.tag3 < t3; t = ttt[index++]);
+            for (; t.tag3 < t3; t = ttt[index++]) ;
             if (t.tag3 == t3 && t.tag2 == t2)
                 return t.pf_prob;
         }
@@ -201,29 +201,6 @@ public class TagLexicon extends LinkedHashMap<String, Tag> {
                             Settings.xLambdaBi * bigramFreqs[t.tag2][t.tag3] * tagL.get(t.tag2).getFreqInv() +
                             Settings.xLambdaTri * t.pf_freq * (float) Math.pow(bigramFreqs[t.tag1][t.tag2], Settings.xLambdaTriExp - 1);
                     Ensure.ensure(t.pf_prob > 0);
-                    /* PN UNCOMMENT this to see the bug
-                    if ((tagL.get(t.tag1).toString().equals("nn.utr.plu.ind.nom") &&
-                            tagL.get(t.tag2).toString().equals("mad") &&
-                            tagL.get(t.tag3).toString().equals("sen.que"))
-                            ||
-                            (tagL.get(t.tag1).toString().equals("mad") &&
-                                    tagL.get(t.tag2).toString().equals("sen.que") &&
-                                    tagL.get(t.tag3).toString().equals("sen.que"))
-                            || (tagL.get(t.tag1).toString().equals("pn.utr.sin.ind.sub") &&
-                            tagL.get(t.tag2).toString().equals("mad") &&
-                            tagL.get(t.tag3).toString().equals("sen.que"))
-                            || (tagL.get(t.tag1).toString().equals("pm.nom") &&
-                            tagL.get(t.tag2).toString().equals("mad") &&
-                            tagL.get(t.tag3).toString().equals("sen.que"))) {
-                        System.out.println("!\t" + i + "\t" +
-                                tagL.get(t.tag1) + "\t" + (int) t.tag1 + "\t" +
-                                tagL.get(t.tag2) + "\t" + (int) t.tag2 + "\t" +
-                                tagL.get(t.tag3) + "\t" + (int) t.tag3 + "\t" +
-                                +t.pf_prob);
-                        System.out.println((int) t.tag1 + "\t" + (int) t.tag2 + "\t" +  (int) t.tag3);
-                        System.out.println(t.pf_prob);
-                        System.out.println("Trigrams: " + Pt3_t1t2(46, 118, 118));
-                    }*/
                 }
             } else
                 Message.invoke(MessageType.MSG_MINOR_WARNING, "xLambdaTriExp cannot exceed 0.6 (not tested)");
