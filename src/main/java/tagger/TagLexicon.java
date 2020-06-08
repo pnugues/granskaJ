@@ -131,7 +131,6 @@ public class TagLexicon extends LinkedHashMap<String, Tag> {
     } // jonas
 
     float Pt3_t1t2(Tag t1, Tag t2, Tag t3) {
-        System.out.println(t1.index + "\t" + t2.index + "\t" + t3.index);
         return Pt3_t1t2(t1.index, t2.index, t3.index);
     }
 
@@ -176,7 +175,6 @@ public class TagLexicon extends LinkedHashMap<String, Tag> {
     }
 
     void computeProbs() {
-        System.out.println("Trigrams: " + Pt3_t1t2(46, 118, 118));
         Ensure.ensure(bigramFreqs != null);
         float prevUni = -1;
         float prevBi = -1;
@@ -234,7 +232,6 @@ public class TagLexicon extends LinkedHashMap<String, Tag> {
         prevTri = Settings.xLambdaTri;
         prevExp = Settings.xLambdaTriExp;
         prevEps = Settings.xEpsilonTri;
-        System.out.println("Trigrams: " + Pt3_t1t2(46, 118, 118));
     }
 
     //PN. This function now loads the files instead of the metainfo

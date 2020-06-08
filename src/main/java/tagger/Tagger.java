@@ -475,7 +475,6 @@ public class Tagger extends Lexicon {
             // computes the lexical probabilities of w2 and assigns the possible tags of w2 to g2.
             for (int u = 0; u < g2.n; u++) {
                 Tag tag2 = g2.tag[u];
-                System.out.println(g2.tag[u]);
                 for (int v = 0; v < g1.n; v++) {
                     Tag tag1 = g1.tag[v];
                     //std::cout << "Pt1t2(" << tag1 << ',' << tag2 << ") = " << Tags().Pt1t2(tag1.Index(), tag2.Index()) << std::endl;
