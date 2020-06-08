@@ -63,12 +63,11 @@ public class TagLexicon extends LinkedHashMap<String, Tag> {
         return CT > 0;
     }
 
-    //TODO PN Here the function might have a bug
     float Pt3_t1t2(int t1, int t2, int t3) {   // P(t3 | t1, t2)
         if (ttOff[t1][t2] >= 0) {
-            TagTrigram t = ttt[ttOff[t1][t2]];
-            for (int i = 0; ttt[ttOff[t1][t2] + i].tag3 <= t3; i++)
-                t = ttt[ttOff[t1][t2] + i];
+            int index = ttOff[t1][t2];
+            TagTrigram t = ttt[index];
+            for (; t.tag3 < t3; t = ttt[index++]);
             if (t.tag3 == t3 && t.tag2 == t2)
                 return t.pf_prob;
         }
