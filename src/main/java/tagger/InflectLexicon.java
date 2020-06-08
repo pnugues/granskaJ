@@ -109,9 +109,10 @@ public class InflectLexicon implements Serializable {
             for (; j < InflectRule.MAX_INFLECTION_FORMS; j++) {
                 r.tagIndex[j] = Tag.TAG_INDEX_NONE;
             }
+            nRules++;
             JSONArray paradigms = infl_rules.getJSONArray("paradigm");
             for (int l = 0; l < paradigms.length(); l++) {
-                nRules++;
+                //nRules++;
                 JSONArray paradigm = (JSONArray) paradigms.get(l);
                 r = rules[nRules];
                 if (nRules != 0) {
@@ -153,6 +154,7 @@ public class InflectLexicon implements Serializable {
                 for (int k = rules[nRules].nForms; k < InflectRule.MAX_INFLECTION_FORMS; k++)
                     r.formIndex[k] = (short) InflectRule.INFLECTION_FORM_NONE;
                 r.nForms++;
+                nRules++;
             }
         }
         isLoaded = true;

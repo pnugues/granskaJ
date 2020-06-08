@@ -1008,9 +1008,7 @@ int WordLexicon::CheckForWordTags(NewWord *nw, Word *w) {
     boolean addTagsDerivedFromLemma(NewWord w, WordTag lemma) {
         boolean ok = false;
         //System.out.println("adding word-tags to " + w + " derivable from " + lemma);
-        //System.out.println(lemma.nInflectRules());
         for (int j = 0; j < lemma.nInflectRules(); j++) {
-            //System.out.println("passe2");
             // jbfix: if no rule found, exit gracefully
             int ir = lemma.inflectRule(j);
             if (ir == InflectRule.INFLECT_NO_RULE)
@@ -1044,7 +1042,7 @@ int WordLexicon::CheckForWordTags(NewWord *nw, Word *w) {
         int nChecked = 0;
         int oks = 0;
         int i;
-        //  std::cout << "check suffix" << std::endl;
+        //System.out.println("check suffix");
         for (i = 0; i < w.nSuffixes(); i++) {
             WordTag suffix = w.suffix(i);
             Ensure.ensure(suffix != null);
@@ -1054,7 +1052,10 @@ int WordLexicon::CheckForWordTags(NewWord *nw, Word *w) {
                 WordTag suffixLemma = suffix.lemma(j);
                 string = string.substring(0, len) + suffixLemma.String(); // string is the wanted lemma-string now
                 Tag lemmaTag = suffixLemma.getTag().originalTag();
-                //System.out.println("SL: " + lemmaTag);
+                /*System.out.println("L: " + suffixLemma.String());
+                System.out.println("NInfl. " + suffixLemma.nInflectRules());
+                System.out.println("LT: " + lemmaTag);
+                System.out.println("Infl. rule: " + suffixLemma.inflectRule);*/
                 Word w2 = get(string);
                 if (w2 != null) {     // main lexicon lemma word exists
                     checkedWords[nChecked++] = w2;
@@ -1072,12 +1073,13 @@ int WordLexicon::CheckForWordTags(NewWord *nw, Word *w) {
                     checkedWords[nChecked++] = w3;
                     w3.suggested = true;
                     WordTag lemma = w3.getWordTag(lemmaTag);
-                    if (lemma == null)
+                    if (lemma == null) {
                         lemma = newWords.addWordTag(w3, lemmaTag);
+                    }
                     lemma.lemma = lemma; // funny
-                    //System.out.println("Str: " + suffixLemma.nInflectRules());
-                    //System.out.println(suffixLemma.inflectRule);
-                    //System.out.println(suffixLemma.nExtraInflectRules);
+                    /*System.out.println("Str: " + suffixLemma.nInflectRules());
+                    System.out.println(suffixLemma.inflectRule);
+                    System.out.println(suffixLemma.nExtraInflectRules);*/
                     for (int k = 0; k < suffixLemma.nInflectRules(); k++) {
                         lemma.inflectRule = (short) suffixLemma.inflectRule(k);
                         if (addTagsDerivedFromLemma(w, lemma))
@@ -1092,7 +1094,7 @@ int WordLexicon::CheckForWordTags(NewWord *nw, Word *w) {
             }
         }
         if (oks < 4) {
-            //std::cout << "check prefix" << std::endl;
+            //System.out.println("check prefix");
             string = w.getString();
             int start = w.getStringLen() - 1;
             int stop = start - Word.MAX_INFLECTION_CHARS_ON_NORMAL_WORD + 1;
