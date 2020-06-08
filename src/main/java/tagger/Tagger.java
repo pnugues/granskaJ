@@ -475,15 +475,22 @@ public class Tagger extends Lexicon {
             // computes the lexical probabilities of w2 and assigns the possible tags of w2 to g2.
             for (int u = 0; u < g2.n; u++) {
                 Tag tag2 = g2.tag[u];
+                System.out.println(g2.tag[u]);
                 for (int v = 0; v < g1.n; v++) {
                     Tag tag1 = g1.tag[v];
                     //std::cout << "Pt1t2(" << tag1 << ',' << tag2 << ") = " << Tags().Pt1t2(tag1.Index(), tag2.Index()) << std::endl;
+                    //System.out.println("Pt1t2(" + tag1 + ',' + tag2 + ") = " + getTags().Pt1t2((char) tag1.index, (char) tag2.index));
                     double best = 0.0;
                     for (int z = 0; z < g0.n; z++) {
                         Tag tag0 = g0.tag[z];
                         double prob = g1.prob[v][z] * (getTags().Pt3_t1t2(tag0, tag1, tag2)); //+biProb);//jonas, this sometimes gives UMR-error
-                        //System.out.println(tag0 + "\t" + tag1 + "\t" + tag2);
-                        //System.out.println(g1.prob[v][z] + "\t" + getTags().Pt3_t1t2(tag0, tag1, tag2) +"\t" + prob);
+                        //PN. TODO Bug here Pt3_t1t2(sen.que|pn.utr.sin.ind.sub, mad)
+                        // Not the same as in the C++ version
+                        /* UNCOMMENT this to see the bug
+                        System.out.print("Pw2_t2(" + s.getWord(i).string + '|' + tag2 + ")");
+                        System.out.println(" * Pt2_t0t1(" + tag2 + '|' + tag0 + ", " + tag1 + ") = ");
+                        System.out.println(g1.prob[v][z] + " * " + getTags().Pt3_t1t2(tag0, tag1, tag2) + " = " + prob);
+                        */
                         if (prob > best) {
                             best = prob;
                             g2.prev[u][v] = (char) z; // remember which tag in position 0 that gave the best probability
@@ -533,7 +540,8 @@ public class Tagger extends Lexicon {
           }
         */
             //    std::cerr << t.GetWord().GetWordTag(g[i].tag[y]) << "\t" << g[i].prob[x][y] / g[i-1].prob[y][g[i+1].prev[x][y]] << std::endl; // jonas, test of output probabilities
-
+            //System.err.println(i + " " + x + " " + y + " " + (int) g[i+1].prev[x][y] + " " + g[i+1]);
+            //System.err.println(t.getWord().getWordTag(g[i].tag[y]) + "\t" + g[i].prob[x][y] / g[i-1].prob[y][g[i+1].prev[x][y]]);
             g[i].selected = y;
             Ensure.ensure(y >= 0);
             x = prevY;

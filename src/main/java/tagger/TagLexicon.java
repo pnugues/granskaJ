@@ -56,16 +56,14 @@ public class TagLexicon extends LinkedHashMap<String, Tag> {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         TagLexicon tl = new TagLexicon();
-        //tl.LoadInfo();
         tl.loadSlow("/Users/pierre/Projets/Granska/granskaJ/lex/tags/");
-        //tl.Save();
-        //tl.LoadFast("/Users/pierre/Projets/Granska/granskaJ/lex/tags/", false);
     }
 
     static boolean isLoaded() {
         return CT > 0;
     }
 
+    //TODO PN Here the function might have a bug
     float Pt3_t1t2(int t1, int t2, int t3) {   // P(t3 | t1, t2)
         if (ttOff[t1][t2] >= 0) {
             TagTrigram t = ttt[ttOff[t1][t2]];
@@ -134,6 +132,7 @@ public class TagLexicon extends LinkedHashMap<String, Tag> {
     } // jonas
 
     float Pt3_t1t2(Tag t1, Tag t2, Tag t3) {
+        System.out.println(t1.index + "\t" + t2.index + "\t" + t3.index);
         return Pt3_t1t2(t1.index, t2.index, t3.index);
     }
 
@@ -178,6 +177,7 @@ public class TagLexicon extends LinkedHashMap<String, Tag> {
     }
 
     void computeProbs() {
+        System.out.println("Trigrams: " + Pt3_t1t2(46, 118, 118));
         Ensure.ensure(bigramFreqs != null);
         float prevUni = -1;
         float prevBi = -1;
@@ -196,7 +196,7 @@ public class TagLexicon extends LinkedHashMap<String, Tag> {
         }
         if (Settings.xLambdaUni != prevUni || Settings.xLambdaBi != prevBi ||
                 Settings.xLambdaTri != prevTri || Settings.xLambdaTriExp != prevExp)
-            if (Settings.xLambdaTriExp < 0.6)
+            if (Settings.xLambdaTriExp < 0.6) {
                 for (i = 0; i < CTTT; i++) {
                     TagTrigram t = ttt[i];
                     Ensure.ensure(bigramFreqs[t.tag1][t.tag2] > 0);
@@ -204,28 +204,38 @@ public class TagLexicon extends LinkedHashMap<String, Tag> {
                             Settings.xLambdaBi * bigramFreqs[t.tag2][t.tag3] * tagL.get(t.tag2).getFreqInv() +
                             Settings.xLambdaTri * t.pf_freq * (float) Math.pow(bigramFreqs[t.tag1][t.tag2], Settings.xLambdaTriExp - 1);
                     Ensure.ensure(t.pf_prob > 0);
-	/*	TagTrigram &t = tagTrigrams[i];
-	ensure(bigramFreqs[t.tag1][t.tag2] > 0);
-	t.pf_prob =  xLambdaUni*tagL.get(t.tag3).UniProb()+
-	  xLambdaBi*bigramFreqs[t.tag2][t.tag3]*tagL.get(t.tag2).FreqInv()+
-	  xLambdaTri*t.pf_freq*(float)pow(bigramFreqs[t.tag1][t.tag2], xLambdaTriExp-1);
-	  ensure(t.pf_prob > 0); */
-                    /*if (tagL.get(t.tag1).toString().equals("sen.per") &&
-                            tagL.get(t.tag2).toString().equals("dt.utr.sin.ind") &&
-                            tagL.get(t.tag3).toString().equals("jj.pos.utr.sin.ind.nom")) {
-                        System.out.println("!\t" + tagL.get(t.tag1) + "\t" +
-                                tagL.get(t.tag2) + "\t" +
-                                tagL.get(t.tag3)
-                                + "\t" + t.pf_prob);
+                    /* PN UNCOMMENT this to see the bug
+                    if ((tagL.get(t.tag1).toString().equals("nn.utr.plu.ind.nom") &&
+                            tagL.get(t.tag2).toString().equals("mad") &&
+                            tagL.get(t.tag3).toString().equals("sen.que"))
+                            ||
+                            (tagL.get(t.tag1).toString().equals("mad") &&
+                                    tagL.get(t.tag2).toString().equals("sen.que") &&
+                                    tagL.get(t.tag3).toString().equals("sen.que"))
+                            || (tagL.get(t.tag1).toString().equals("pn.utr.sin.ind.sub") &&
+                            tagL.get(t.tag2).toString().equals("mad") &&
+                            tagL.get(t.tag3).toString().equals("sen.que"))
+                            || (tagL.get(t.tag1).toString().equals("pm.nom") &&
+                            tagL.get(t.tag2).toString().equals("mad") &&
+                            tagL.get(t.tag3).toString().equals("sen.que"))) {
+                        System.out.println("!\t" + i + "\t" +
+                                tagL.get(t.tag1) + "\t" + (int) t.tag1 + "\t" +
+                                tagL.get(t.tag2) + "\t" + (int) t.tag2 + "\t" +
+                                tagL.get(t.tag3) + "\t" + (int) t.tag3 + "\t" +
+                                +t.pf_prob);
+                        System.out.println((int) t.tag1 + "\t" + (int) t.tag2 + "\t" +  (int) t.tag3);
+                        System.out.println(t.pf_prob);
+                        System.out.println("Trigrams: " + Pt3_t1t2(46, 118, 118));
                     }*/
                 }
-            else
+            } else
                 Message.invoke(MessageType.MSG_MINOR_WARNING, "xLambdaTriExp cannot exceed 0.6 (not tested)");
         prevUni = Settings.xLambdaUni;
         prevBi = Settings.xLambdaBi;
         prevTri = Settings.xLambdaTri;
         prevExp = Settings.xLambdaTriExp;
         prevEps = Settings.xEpsilonTri;
+        System.out.println("Trigrams: " + Pt3_t1t2(46, 118, 118));
     }
 
     //PN. This function now loads the files instead of the metainfo
