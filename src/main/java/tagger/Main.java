@@ -194,17 +194,6 @@ public class Main {
 
         //  std::cout.precision(0);
         //std::cout.setf(std::ios::fixed);
-        // PN. Remove the fast files for now
-        if (Files.exists(Paths.get("lex/morfs/fast"))) {
-            Files.delete(Paths.get("lex/morfs/fast"));
-
-        }
-        if (Files.exists(Paths.get("lex/words/fast"))) {
-            Files.delete(Paths.get("lex/words/fast"));
-        }
-        if (Files.exists(Paths.get("lex/tags/fast"))) {
-            Files.delete(Paths.get("lex/tags/fast"));
-        }
         tagger = new Tagger();
         if (!tagger.load(lexiconDir))
             return;
