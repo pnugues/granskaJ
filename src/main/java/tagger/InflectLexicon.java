@@ -113,16 +113,17 @@ public class InflectLexicon implements Serializable {
                 System.out.print("\t" + r.tagIndex[j]);
             }
             System.out.println();*/
-            nRules++;
+            //nRules++;
             JSONArray paradigms = infl_rules.getJSONArray("paradigm");
             for (int l = 0; l < paradigms.length(); l++) {
                 JSONArray paradigm = (JSONArray) paradigms.get(l);
-                r = rules[nRules];
-                if (nRules != 0) {
+                rules[nRules] = r;
+                //r = rules[nRules];
+                /*if (nRules != 0) {
                     for (j = 0; j < InflectRule.MAX_INFLECTION_FORMS; j++) {
                         r.tagIndex[j] = rules[nRules - 1].tagIndex[j];
                     }
-                }
+                }*/
                 r.nameIndex = addString((String) paradigm.get(0));
                 String suffixes = (String) paradigm.get(1);
                 List<String> infl_suffixes = new ArrayList<>();
@@ -162,7 +163,15 @@ public class InflectLexicon implements Serializable {
             //nRules++;
         }
         /*for (int i = 0; i < nRules; i++) {
-            System.out.println(i + ":\t" + rules[i] + "\t" + rules[i].ending(0));
+            System.out.print(i + ":\t" + rules[i] + "\t" + rules[i].nEndings + "\t");
+            for (int j = 0; j < rules[i].nEndings; j++) {
+                System.out.print(rules[i].ending(j) + ",");
+            }
+            System.out.print("\tNF: " + rules[i].nForms);
+            for (int j = 0; j < rules[i].nForms; j++) {
+                System.out.print("\tF: " + rules[i].form(j) + ",");
+            }
+            System.out.println("\t" + rules[i].tagIndex(0));
         }*/
         isLoaded = true;
     }
