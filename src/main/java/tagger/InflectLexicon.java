@@ -82,6 +82,8 @@ public class InflectLexicon implements Serializable {
 
         nRules = 0;
         for (int i = 0; i < inflect.length(); i++) {
+            int[] tagIndex = new int[InflectRule.MAX_INFLECTION_FORMS];
+
             InflectRule r = rules[nRules];
             JSONObject infl_rules = (JSONObject) inflect.get(i);
             JSONArray tagStrings = infl_rules.getJSONArray("feat_infl");
@@ -97,33 +99,37 @@ public class InflectLexicon implements Serializable {
                         Message.invoke(MessageType.MSG_WARNING, "unknown tag in inflection.rules:",
                                 t.string);//jonas 	    Message(MSG_ERROR, "unknown tag in inflection.rules:", t.String());
                     } else {
-                        r.tagIndex[j] = t2.getIndex();
+                        tagIndex[j] = t2.getIndex();
+                        //r.tagIndex[j] = t2.getIndex();
                         if (j == 0) {
                             t2.ruleBase = true;
                         }
                     }
                 } else {
-                    r.tagIndex[j] = Tag.TAG_INDEX_NONE;
+                    //r.tagIndex[j] = Tag.TAG_INDEX_NONE;
+                    tagIndex[j] = Tag.TAG_INDEX_NONE;
                 }
             }
             for (; j < InflectRule.MAX_INFLECTION_FORMS; j++) {
-                r.tagIndex[j] = Tag.TAG_INDEX_NONE;
+                tagIndex[j] = Tag.TAG_INDEX_NONE;
+                //r.tagIndex[j]
             }
             /*for (j=0; j < InflectRule.MAX_INFLECTION_FORMS; j++) {
-                System.out.print("\t" + r.tagIndex[j]);
+                System.out.print("\t" + tagIndex[j]);
             }
             System.out.println();*/
             //nRules++;
             JSONArray paradigms = infl_rules.getJSONArray("paradigm");
             for (int l = 0; l < paradigms.length(); l++) {
                 JSONArray paradigm = (JSONArray) paradigms.get(l);
-                rules[nRules] = r;
+                r = rules[nRules];
+                r.tagIndex = tagIndex;
                 //r = rules[nRules];
-                /*if (nRules != 0) {
-                    for (j = 0; j < InflectRule.MAX_INFLECTION_FORMS; j++) {
+                /*if (nRules != 0) {*/
+                    /*for (j = 0; j < InflectRule.MAX_INFLECTION_FORMS; j++) {
                         r.tagIndex[j] = rules[nRules - 1].tagIndex[j];
-                    }
-                }*/
+                    }*/
+                //}
                 r.nameIndex = addString((String) paradigm.get(0));
                 String suffixes = (String) paradigm.get(1);
                 List<String> infl_suffixes = new ArrayList<>();
