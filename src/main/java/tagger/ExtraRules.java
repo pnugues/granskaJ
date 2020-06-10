@@ -8,7 +8,7 @@ public class ExtraRules implements Serializable {
 
     public ExtraRules() {
         wt = null;
-        for (int i = 0; i < InflectRule.MAX_INFLECTION_RULES_PER_WORDTAG - 1; i++)
+        for (int i = 0; i < rule.length; i++)
             rule[i] = (short) InflectRule.INFLECT_NO_RULE;
     }
 }

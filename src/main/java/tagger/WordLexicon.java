@@ -38,7 +38,7 @@ import java.util.*;
 
 
 public class WordLexicon extends LinkedHashMap<String, Word> implements Serializable {
-    public static int MAX_N_EXTRA_RULES = 300;
+    public static int MAX_N_EXTRA_RULES = 300; //PN changed from 300
     public static int MAX_N_EXTRA_LEMMAS = 10000;
     public List<Word> wordL;
     Map<String, Word> styleWordMap;

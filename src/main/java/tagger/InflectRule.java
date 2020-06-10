@@ -13,7 +13,7 @@ public class InflectRule implements Serializable {
     static int MAX_INFLECTION_ENDINGS = 10;
     static int INFLECT_NO_RULE = 511;
     static int INFLECTION_FORM_NONE = Short.MAX_VALUE;
-    static int MAX_INFLECTION_RULES_PER_WORDTAG = 3; //cannot exceed 4 without more bits for nExtraInflectRules in Word
+    static int MAX_INFLECTION_RULES_PER_WORDTAG = 3; //PN changed from 3 //cannot exceed 4 without more bits for nExtraInflectRules in Word
     short nameIndex;
     short[] endingIndex = new short[MAX_INFLECTION_ENDINGS];
     int[] tagIndex = new int[MAX_INFLECTION_FORMS];
