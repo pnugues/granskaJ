@@ -38,7 +38,7 @@ import java.util.*;
 
 
 public class WordLexicon extends LinkedHashMap<String, Word> implements Serializable {
-    public static int MAX_N_EXTRA_RULES = 300; //PN changed from 300
+    public static int MAX_N_EXTRA_RULES = 300;
     public static int MAX_N_EXTRA_LEMMAS = 10000;
     public List<Word> wordL;
     Map<String, Word> styleWordMap;
@@ -851,10 +851,9 @@ public class WordLexicon extends LinkedHashMap<String, Word> implements Serializ
         int len = s.length();
         while (min <= max) {
             int mid = (max + min) / 2;
-            // TODO Understand why this change corrected the bug
-            // PN. Changed String() to string and seems to work. Should understand why
-            int cmp = s.substring(0, len).compareTo(wordsAlpha[mid].string);
-            //int cmp = s.substring(0, len).compareTo(wordsAlpha[mid].String());
+            String curWord = wordsAlpha[mid].String();
+            curWord = curWord.substring(0, Math.min(len, curWord.length()));
+            int cmp = s.compareTo(curWord);
             if (cmp > 0)
                 min = mid + 1;
             else {
@@ -868,8 +867,9 @@ public class WordLexicon extends LinkedHashMap<String, Word> implements Serializ
             min2 = 0;
         while (min2 <= max2) {
             int mid = (max2 + min2) / 2;
-            if (s.substring(0, len).compareTo(wordsAlpha[mid].string) >= 0)
-                //if (s.substring(0, len).compareTo(wordsAlpha[mid].String()) >= 0)
+            String curWord = wordsAlpha[mid].String();
+            curWord = curWord.substring(0, Math.min(len, curWord.length()));
+            if (s.compareTo(curWord) >= 0)
                 min2 = mid + 1;
             else
                 max2 = mid - 1;
@@ -1020,7 +1020,7 @@ int WordLexicon::CheckForWordTags(NewWord *nw, Word *w) {
                         r.tagIndex(i) != Tag.TAG_INDEX_NONE &&
                         !tags.tagL.get(r.tagIndex(i)).isSms()) {
                     WordTag wt = newWords.addWordTag(w, tags.tagL.get(r.tagIndex(i)));
-                    //	std::cout << wt << " from " << lemma << std::endl;
+                    //System.out.println(wt + " from " + lemma);
                     wt.lemma = lemma;
                     w.isDerived = true;
                     ok = true;
@@ -1052,10 +1052,6 @@ int WordLexicon::CheckForWordTags(NewWord *nw, Word *w) {
                 WordTag suffixLemma = suffix.lemma(j);
                 string = string.substring(0, len) + suffixLemma.String(); // string is the wanted lemma-string now
                 Tag lemmaTag = suffixLemma.getTag().originalTag();
-                /*System.out.println("L: " + suffixLemma.String());
-                System.out.println("NInfl. " + suffixLemma.nInflectRules());
-                System.out.println("LT: " + lemmaTag);
-                System.out.println("Infl. rule: " + suffixLemma.inflectRule);*/
                 Word w2 = get(string);
                 if (w2 != null) {     // main lexicon lemma word exists
                     checkedWords[nChecked++] = w2;
@@ -1077,9 +1073,6 @@ int WordLexicon::CheckForWordTags(NewWord *nw, Word *w) {
                         lemma = newWords.addWordTag(w3, lemmaTag);
                     }
                     lemma.lemma = lemma; // funny
-                    /*System.out.println("Str: " + suffixLemma.nInflectRules());
-                    System.out.println(suffixLemma.inflectRule);
-                    System.out.println(suffixLemma.nExtraInflectRules);*/
                     for (int k = 0; k < suffixLemma.nInflectRules(); k++) {
                         lemma.inflectRule = (short) suffixLemma.inflectRule(k);
                         if (addTagsDerivedFromLemma(w, lemma))
