@@ -13,6 +13,6 @@ I would have to dump all the programs that depended on it.
 I first tried to find a version of Granska in Java, a language that I believe makes it easier to maintain programs. I could not find any. So with the Corona crisis, 
 I translated it myself. I also did it for the lex files that are now in JSON. And here is the result.
 
-So, for the people, who loved Granska, granskaJ is an equivalent in Java.
+So, for the people who loved Granska, granskaJ is an equivalent in Java.
 
 This new version is far from being optimized and may still have translation bugs. Nonetheless, I hope some people will find this translation useful and, possibly, decide to improve it.
