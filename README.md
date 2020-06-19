@@ -1,7 +1,7 @@
 # granskaJ: Granska in Java
 
 Granska is a part-of-speech tagger for Swedish. It was developed by a team at KTH at the turn of the 2000s 
-and its original source code is available from this link: https://github.com/viggokann/granska
+and its original source code is available from this link: https://github.com/viggokann/granska and the lex files from this one: https://github.com/viggokann/granska/tree/willes/lex.
 
 Granska was a very good tagger, both accurate and fast, with lemmatization included. Many people, in the Swedish NLP 
 community, used it in their projects.
